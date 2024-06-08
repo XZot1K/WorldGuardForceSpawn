@@ -1,0 +1,8 @@
+name: WorldGuardForceSpawn
+version: '${project.version}'
+main: dev.zotware.plugins.wgfs.WorldGuardForceSpawn
+api-version: '1.13'
+depend: [ WorldGuard, WorldEdit ]
+load: POSTWORLD
+authors: [ XZot1K ]
+website: https://www.zotware.dev
