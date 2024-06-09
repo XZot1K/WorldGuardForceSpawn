@@ -9,6 +9,7 @@ import com.sk89q.worldguard.protection.flags.registry.FlagConflictException;
 import com.sk89q.worldguard.protection.flags.registry.FlagRegistry;
 import com.sk89q.worldguard.protection.managers.RegionManager;
 import org.bukkit.Location;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -52,6 +53,19 @@ public final class WorldGuardForceSpawn extends JavaPlugin implements Listener {
 
     @EventHandler(priority = EventPriority.LOWEST) // actually highest under MONITOR
     public void onCreatureSpawn(CreatureSpawnEvent event) {
+
+        ConfigurationSection section = getConfig().getConfigurationSection("world-spawn-rules");
+        if (section != null) {
+            for (String key : section.getKeys(false)) {
+                if (event.getLocation().getWorld() == null || !event.getLocation().getWorld().getName().equalsIgnoreCase(key)) {continue;}
+
+                List<String> allowedSpawnReasons = getConfig().getStringList("world-spawn-rules." + key + ".allowed-entity-spawns");
+                if (!allowedSpawnReasons.contains(event.getEntityType().name())) {
+                    event.setCancelled(true);
+                    return;
+                }
+            }
+        }
 
         List<String> allowedSpawnReasons = getConfig().getStringList("allowed-spawn-reasons");
         if (allowedSpawnReasons.isEmpty() || allowedSpawnReasons.contains(event.getSpawnReason().name())) {return;}

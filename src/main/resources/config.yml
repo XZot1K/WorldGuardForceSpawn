@@ -1,2 +1,9 @@
 # all spawn reasons can be found at: https://hub.spigotmc.org/javadocs/spigot/org/bukkit/event/entity/CreatureSpawnEvent.SpawnReason.html
 allowed-spawn-reasons: [ "EGG", "COMMAND" ]
+
+# This can have any worlds desired, all entity types can be found at https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/entity/EntityType.html
+world-spawn-rules:
+  world:
+    allowed-entity-spawns: [ "SHULKER", "ENDERMAN" ]
+  world2:
+    allowed-entity-spawns: [ "PIG" ]
